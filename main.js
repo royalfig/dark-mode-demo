@@ -1,5 +1,4 @@
 const root = document.documentElement;
-root.setAttribute("color-mode", "light");
 
 // Define a function to
 const toggleColorMode = e => {
