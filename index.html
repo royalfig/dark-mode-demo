@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dark Mode Demo</title>
+    <script>
+      if (
+        localStorage.getItem("color-mode" === "light") ||
+        (window.matchMedia("(prefers-color-scheme: light").matches &&
+          !localStorage.getItem("color-mode"))
+      ) {
+        document.documentElement.setAttribute("color-mode", "light");
+      }
+    </script>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>

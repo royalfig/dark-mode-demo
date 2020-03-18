@@ -4,11 +4,11 @@ const root = document.documentElement;
 const toggleColorMode = e => {
   if (e.currentTarget.classList.contains("light")) {
     root.setAttribute("color-mode", "light");
-    localStorage.setItem("color-pref", "light");
+    localStorage.setItem("color-mode", "light");
     return;
   }
   root.setAttribute("color-mode", "dark");
-  localStorage.setItem("color-pref", "dark");
+  localStorage.setItem("color-mode", "dark");
 };
 
 const toggleColorButtons = document.querySelectorAll(".color-mode__btn");
