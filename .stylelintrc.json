@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "stylelint-config-recess-order",
+    "stylelint-config-recommended-scss"
+  ]
+}

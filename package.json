@@ -1,0 +1,23 @@
+{
+  "name": "dark-mode-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass-watch": "node-sass -w --output-style expanded main.scss main.css",
+    "sl": "npx stylelint main.scss"
+  },
+  "author": "Ryan Feigenbaum",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.13.1",
+    "stylelint": "^13.2.1",
+    "stylelint-config-recess-order": "^2.0.4",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-config-sass-guidelines": "^7.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.0.0",
+    "stylelint-scss": "^3.15.0"
+  }
+}

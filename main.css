@@ -1,0 +1,161 @@
+:root {
+  --radius: 50px;
+  --sans: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu,
+    cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--surface);
+}
+
+:root[color-mode="light"] {
+  --surface: hsl(0, 0%, 90%);
+  --surface2: hsl(0, 0%, 95%);
+  --surface3: hsl(0, 0%, 100%);
+  --element: #111;
+  --element2: #222;
+  --elementInverse: #eee;
+  --primary: #0064dd;
+  --secondary: #00e19c;
+  --icon: #fbbc33;
+  --box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+}
+
+:root[color-mode="dark"] {
+  --surface: hsl(0, 0%, 15%);
+  --surface2: hsl(0, 0%, 20%);
+  --surface2: hsl(0, 0%, 25%);
+  --element: #eee;
+  --element2: #ddd;
+  --elementInverse: #111;
+  --primary: #41f666;
+  --secondary: #0089f4;
+  --icon: #feff7e;
+  --box-shadow: 20px 20px 60px #1d1d1d, -20px -20px 60px #272727;
+}
+
+.color-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin: 0;
+}
+
+:root[color-mode="light"] .color-mode .light {
+  display: none;
+}
+
+:root[color-mode="dark"] .color-mode .dark {
+  display: none;
+}
+
+.color-mode__header {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.color-mode__header:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  content: "";
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius);
+}
+
+.color-mode__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin: 0 auto 1.5rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--element);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+}
+
+.color-mode__btn svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 7px;
+  fill: none;
+  stroke: var(--element2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5px;
+}
+
+.color-mode__btn:hover svg,
+.color-mode__btn:focus svg, .color-mode__btn:focus {
+  outline: none;
+  fill: var(--icon);
+}
+
+.color-mode__section {
+  max-width: 640px;
+  padding: 1rem 3rem;
+  margin-bottom: 5rem;
+  color: var(--element);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  transition: all 0.2s ease-in;
+}
+
+.color-mode h1 {
+  font-size: 2.5rem;
+}
+
+.color-mode h2 {
+  color: var(--element2);
+}
+
+.color-mode__link-container {
+  display: flex;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.color-mode__link {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--element);
+  text-decoration: none;
+  background-color: var(--surface);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  transition: all 0.2s ease-in;
+}
+
+.color-mode__link:hover, .color-mode__link:focus {
+  color: var(--elementInverse);
+  background: var(--primary);
+}
+
+.color-mode__excerpt {
+  padding: 1rem 2rem;
+  margin: 2rem;
+  background: var(--surface2);
+  border-radius: var(--radius);
+}
+
+.color-mode__excerpt a {
+  color: var(--primary);
+}
+
+.color-mode__excerpt a:hover, .color-mode__excerpt a:focus {
+  color: var(--secondary);
+}

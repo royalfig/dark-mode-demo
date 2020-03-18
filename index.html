@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dark Mode Demo</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <svg style="display: none;">
+      <symbol viewBox="0 0 24 24" id="moon">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol viewBox="0 0 24 24" id="sun">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
+    <main class="color-mode">
+      <section class="color-mode__section">
+        <header class="color-mode__header">
+          <button class="color-mode__btn light" aria-label="Toggle light mode">
+            Toggle Light Mode
+            <svg aria-hidden="true">
+              <title>Light Mode</title>
+              <use href="#sun"></use>
+            </svg>
+          </button>
+          <button class="color-mode__btn dark" aria-label="Toggle dark mode">
+            Toggle Dark Mode
+            <svg aria-hidden="true">
+              <title>Dark Mode</title>
+              <use href="#moon"></use>
+            </svg>
+          </button>
+        </header>
+        <div class="color-mode__container dark">
+          <h1>Hi, I'm light mode.</h1>
+          <div class="color-mode__link-container">
+            <a
+              href="https://ryanfeigenbaum.com/dark-mode"
+              target="blank"
+              class="color-mode__link"
+              >Read More: The Complete Guide to the Dark Mode Toggle</a
+            >
+          </div>
+          <h2>Chapter 1</h2>
+          <p>
+            Alice was beginning to get very tired of sitting by her sister on
+            the bank, and of having nothing to do: once or twice she had peeped
+            into the book her sister was reading, but it had no pictures or
+            conversations in it, “and what is the use of a book,” thought Alice
+            “without pictures or conversations?”
+          </p>
+          <p>
+            So she was considering in her own mind (as well as she could, for
+            the hot day made her feel very sleepy and stupid), whether the
+            pleasure of making a daisy-chain would be worth the trouble of
+            getting up and picking the daisies, when suddenly a White Rabbit
+            with pink eyes ran close by her.
+          </p>
+          <p>
+            There was nothing so very remarkable in that; nor did Alice think it
+            so very much out of the way to hear the Rabbit say to itself, “Oh
+            dear! Oh dear! I shall be late!” (when she thought it over
+            afterwards, it occurred to her that she ought to have wondered at
+            this, but at the time it all seemed quite natural); but when the
+            Rabbit actually took a watch out of its waistcoat-pocket, and looked
+            at it, and then hurried on, Alice started to her feet, for it
+            flashed across her mind that she had never before seen a rabbit with
+            either a waistcoat-pocket, or a watch to take out of it, and burning
+            with curiosity, she ran across the field after it, and fortunately
+            was just in time to see it pop down a large rabbit-hole under the
+            hedge.
+          </p>
+          <p class="color-mode__excerpt">
+            👆 This light excerpt is from Lewis Carroll's
+            <a
+              href="http://www.gutenberg.org/files/11/11-h/11-h.htm"
+              target="_blank"
+              ><em>Alice in Wonderland</em></a
+            >
+            (1865)
+          </p>
+        </div>
+        <div class="color-mode__container light">
+          <h1>Hi, I'm dark mode.</h1>
+          <div class="color-mode__link-container">
+            <a
+              href="https://ryanfeigenbaum.com/dark-mode"
+              target="blank"
+              class="color-mode__link"
+              >Read More: The Complete Guide to the Dark Mode Toggle</a
+            >
+          </div>
+          <h2>Chapter 1</h2>
+          <p>
+            I am by birth a Genevese, and my family is one of the most
+            distinguished of that republic. My ancestors had been for many years
+            counsellors and syndics, and my father had filled several public
+            situations with honour and reputation. He was respected by all who
+            knew him for his integrity and indefatigable attention to public
+            business. He passed his younger days perpetually occupied by the
+            affairs of his country; a variety of circumstances had prevented his
+            marrying early, nor was it until the decline of life that he became
+            a husband and the father of a family.
+          </p>
+          <p>
+            As the circumstances of his marriage illustrate his character, I
+            cannot refrain from relating them. One of his most intimate friends
+            was a merchant who, from a flourishing state, fell, through numerous
+            mischances, into poverty. This man, whose name was Beaufort, was of
+            a proud and unbending disposition and could not bear to live in
+            poverty and oblivion in the same country where he had formerly been
+            distinguished for his rank and magnificence. Having paid his debts,
+            therefore, in the most honourable manner, he retreated with his
+            daughter to the town of Lucerne, where he lived unknown and in
+            wretchedness. My father loved Beaufort with the truest friendship
+            and was deeply grieved by his retreat in these unfortunate
+            circumstances. He bitterly deplored the false pride which led his
+            friend to a conduct so little worthy of the affection that united
+            them. He lost no time in endeavouring to seek him out, with the hope
+            of persuading him to begin the world again through his credit and
+            assistance.
+          </p>
+
+          <p class="color-mode__excerpt">
+            👆 This dark excerpt is from Mary Wollstonecraft Shelley&apos;s
+            <a
+              href="https://www.gutenberg.org/files/42324/42324-h/42324-h.htm"
+              target="_blank"
+              ><em>Frankenstein; Or, The Modern Prometheus</em></a
+            >
+            (1818)
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>
