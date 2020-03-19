@@ -7,33 +7,40 @@
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.5;
-  background-color: var(--surface);
+  background-color: var(--surface1);
 }
 
 :root[color-mode="light"] {
-  --surface: #e6e6e6;
+  --surface1: #e6e6e6;
   --surface2: #f2f2f2;
   --surface3: #ffffff;
-  --element: #111;
-  --element2: #222;
+  --element1: #111111;
+  --element2: #222222;
+  --element3: #333333;
   --elementInverse: #eee;
-  --primary: #0158c2;
-  --secondary: #639c99;
-  --icon: #fff7d6;
+  --primary: #01408e;
+  --secondary: #3c5d5c;
+  --tertiary: #fff7d6;
   --box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
 }
 
 :root[color-mode="dark"] {
-  --surface: #262626;
+  --surface1: #262626;
   --surface2: #333333;
   --surface3: #404040;
-  --element: #eee;
-  --element2: #ddd;
+  --element1: #eeeeee;
+  --element2: #dddddd;
+  --element3: #cccccc;
   --elementInverse: #111;
-  --primary: #0089f4;
+  --primary: #8fceff;
   --secondary: #72faca;
-  --icon: #eee8a9;
+  --tertiary: #eee8a9;
   --box-shadow: 20px 20px 60px #1d1d1d, -20px -20px 60px #272727;
+}
+
+body {
+  padding: 0;
+  margin: 0;
 }
 
 .color-mode {
@@ -41,15 +48,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: calc(100vh - 4rem);
   padding: 2rem;
   margin: 0;
 }
 
-:root[color-mode="light"] .color-mode .light {
+:root[color-mode="light"] .color-mode .light--hidden {
   display: none;
 }
 
-:root[color-mode="dark"] .color-mode .dark {
+:root[color-mode="dark"] .color-mode .dark--hidden {
   display: none;
 }
 
@@ -79,7 +87,7 @@
   font-size: 1rem;
   font-weight: 600;
   line-height: 1;
-  color: var(--element);
+  color: var(--element1);
   cursor: pointer;
   background: none;
   border: none;
@@ -101,15 +109,15 @@
 .color-mode__btn:hover svg,
 .color-mode__btn:focus svg, .color-mode__btn:focus {
   outline: none;
-  fill: var(--icon);
+  fill: var(--tertiary);
 }
 
 .color-mode__section {
   max-width: 640px;
   padding: 1rem 3rem;
   margin-bottom: 5rem;
-  color: var(--element);
-  background: var(--surface);
+  color: var(--element1);
+  background: var(--surface1);
   border-radius: var(--radius);
   box-shadow: var(--box-shadow);
   transition: all 0.2s ease-in;
@@ -132,9 +140,9 @@
 .color-mode__link {
   padding: 0.5rem 1rem;
   font-weight: 600;
-  color: var(--element);
+  color: var(--element1);
   text-decoration: none;
-  background-color: var(--surface);
+  background-color: var(--surface1);
   border: 2px solid var(--primary);
   border-radius: var(--radius);
   transition: all 0.2s ease-in;
@@ -148,6 +156,7 @@
 .color-mode__excerpt {
   padding: 1rem 2rem;
   margin: 2rem;
+  color: var(--element2);
   background: var(--surface2);
   border-radius: var(--radius);
 }

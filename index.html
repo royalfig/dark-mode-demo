@@ -35,14 +35,20 @@
     <main class="color-mode">
       <section class="color-mode__section">
         <header class="color-mode__header">
-          <button class="color-mode__btn light" aria-label="Toggle light mode">
+          <button
+            class="color-mode__btn light--hidden"
+            aria-label="Toggle light mode"
+          >
             Toggle Light Mode
             <svg aria-hidden="true">
               <title>Light Mode</title>
               <use href="#sun"></use>
             </svg>
           </button>
-          <button class="color-mode__btn dark" aria-label="Toggle dark mode">
+          <button
+            class="color-mode__btn dark--hidden"
+            aria-label="Toggle dark mode"
+          >
             Toggle Dark Mode
             <svg aria-hidden="true">
               <title>Dark Mode</title>
@@ -141,11 +147,12 @@
           </p>
 
           <p class="color-mode__excerpt">
-            👆 This dark excerpt is from Mary Wollstonecraft Shelley&apos;s
+            👆 This <span class="color-mode__element2">dark</span> excerpt is
+            from Mary Shelley&apos;s
             <a
               href="https://www.gutenberg.org/files/42324/42324-h/42324-h.htm"
               target="_blank"
-              ><em>Frankenstein; Or, The Modern Prometheus</em></a
+              ><em>Frankenstein</em></a
             >
             (1818)
           </p>
