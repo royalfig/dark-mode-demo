@@ -1,26 +1,26 @@
-const toggleColorMode = e => {
-  // Switch to Light Mode
-  if (e.currentTarget.classList.contains("light--hidden")) {
-    // Sets the custom html attribute
-    document.documentElement.setAttribute("color-mode", "light");
+if (window.CSS && CSS.supports("color", "var(--primary)")) {
+  var toggleColorMode = function toggleColorMode(e) {
+    // Switch to Light Mode
+    if (e.currentTarget.classList.contains("light--hidden")) {
+      // Sets the custom html attribute
+      document.documentElement.setAttribute("color-mode", "light"); // Sets the user's preference in local storage
 
-    // Sets the user's preference in local storage
-    localStorage.setItem("color-mode", "light");
-    return;
-  }
+      localStorage.setItem("color-mode", "light");
+      return;
+    }
+    /* Switch to Dark Mode
+    Sets the custom html attribute */
+    document.documentElement.setAttribute("color-mode", "dark"); // Sets the user's preference in local storage
 
-  /* Switch to Dark Mode
-  Sets the custom html attribute */
-  document.documentElement.setAttribute("color-mode", "dark");
+    localStorage.setItem("color-mode", "dark");
+  }; // Get the buttons in the DOM
 
-  // Sets the user's preference in local storage
-  localStorage.setItem("color-mode", "dark");
-};
+  var toggleColorButtons = document.querySelectorAll(".color-mode__btn"); // Set up event listeners
 
-// Get the buttons in the DOM
-const toggleColorButtons = document.querySelectorAll(".color-mode__btn");
-
-// Set up event listeners
-toggleColorButtons.forEach(btn => {
-  btn.addEventListener("click", toggleColorMode);
-});
+  toggleColorButtons.forEach(function(btn) {
+    btn.addEventListener("click", toggleColorMode);
+  });
+} else {
+  var btnContainer = document.querySelector(".color-mode__header");
+  btnContainer.style.display = "none";
+}
