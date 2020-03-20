@@ -1,4 +1,4 @@
-![](DarkMode.jpg)
+[![](DarkMode.jpg)](https://royalfig.github.io/dark-mode-demo/)
 
 # The Complete Guide to the Dark Mode Toggle
 
