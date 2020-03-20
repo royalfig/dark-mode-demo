@@ -2,12 +2,6 @@
   --radius: 50px;
   --sans: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu,
     cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  padding: 0;
-  margin: 0;
-  font-family: var(--sans);
-  font-size: 1rem;
-  line-height: 1.5;
-  background-color: var(--surface1);
 }
 
 :root[color-mode="light"] {
@@ -36,6 +30,16 @@
   --secondary: #72faca;
   --tertiary: #eee8a9;
   --box-shadow: 20px 20px 60px #1d1d1d, -20px -20px 60px #272727;
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #e6e6e6;
+  background-color: var(--surface1, #e6e6e6);
 }
 
 body {
@@ -73,8 +77,8 @@ body {
   width: 100%;
   height: 5px;
   content: "";
-  background: linear-gradient(to right, var(--primary), var(--secondary));
-  border-radius: var(--radius);
+  background: linear-gradient(to right, #01408e, #3c5d5c);
+  background: linear-gradient(to right, var(--primary, #01408e), var(--secondary, #3c5d5c));
 }
 
 .color-mode__btn {
@@ -87,7 +91,8 @@ body {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1;
-  color: var(--element1);
+  color: #111111;
+  color: var(--surface1, #111111);
   cursor: pointer;
   background: none;
   border: none;
@@ -100,7 +105,8 @@ body {
   height: 30px;
   margin-left: 7px;
   fill: none;
-  stroke: var(--element2);
+  stroke: #222222;
+  stroke: var(--surface1, #222222);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.5px;
@@ -109,14 +115,18 @@ body {
 .color-mode__btn:hover svg,
 .color-mode__btn:focus svg, .color-mode__btn:focus {
   outline: none;
-  fill: var(--tertiary);
+  fill: #fff7d6;
+  fill: var(--surface1, #fff7d6);
 }
 
 .color-mode__section {
   max-width: 640px;
   padding: 1rem 3rem;
   margin-bottom: 5rem;
-  color: var(--element1);
+  color: #111111;
+  color: var(--surface1, #111111);
+  background-color: #e6e6e6;
+  background-color: var(--surface1, #e6e6e6);
   background: var(--surface1);
   border-radius: var(--radius);
   box-shadow: var(--box-shadow);
@@ -128,7 +138,7 @@ body {
 }
 
 .color-mode h2 {
-  color: var(--element2);
+  color: var(--surface1, );
 }
 
 .color-mode__link-container {
@@ -140,31 +150,41 @@ body {
 .color-mode__link {
   padding: 0.5rem 1rem;
   font-weight: 600;
-  color: var(--element1);
+  color: #111111;
+  color: var(--surface1, #111111);
   text-decoration: none;
-  background-color: var(--surface1);
-  border: 2px solid var(--primary);
+  background-color: #e6e6e6;
+  background-color: var(--surface1, #e6e6e6);
+  border-color: #01408e;
+  border-color: var(--surface1, #01408e);
+  border-style: solid;
+  border-width: 2px;
   border-radius: var(--radius);
   transition: all 0.2s ease-in;
 }
 
 .color-mode__link:hover, .color-mode__link:focus {
-  color: var(--elementInverse);
-  background: var(--primary);
+  color: #eee;
+  color: var(--surface1, #eee);
+  background-color: #01408e;
+  background-color: var(--surface1, #01408e);
 }
 
 .color-mode__excerpt {
   padding: 1rem 2rem;
   margin: 2rem;
-  color: var(--element2);
-  background: var(--surface2);
+  color: #222222;
+  color: var(--surface1, #222222);
+  background-color: #f2f2f2;
+  background-color: var(--surface1, #f2f2f2);
   border-radius: var(--radius);
 }
 
 .color-mode__excerpt a {
-  color: var(--primary);
+  color: #01408e;
+  color: var(--surface1, #01408e);
 }
 
 .color-mode__excerpt a:hover, .color-mode__excerpt a:focus {
-  color: var(--secondary);
+  color: var(secondary);
 }

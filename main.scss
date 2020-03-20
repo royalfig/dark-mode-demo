@@ -1,3 +1,21 @@
+$colors: (
+  "surface1": #e6e6e6,
+  "surface2": #f2f2f2,
+  "surface3": #ffffff,
+  "element1": #111111,
+  "element2": #222222,
+  "element3": #333333,
+  "elementInverse": #eee,
+  "primary": #01408e,
+  "secondary": #3c5d5c,
+  "tertiary": #fff7d6
+);
+
+@mixin color-var($property, $color) {
+  #{$property}: map-get($colors, $color);
+  #{$property}: var(--$color, map-get($colors, $color));
+}
+
 :root {
   --radius: 50px;
   --sans: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu,
@@ -30,13 +48,15 @@
     --tertiary: #eee8a9;
     --box-shadow: 20px 20px 60px #1d1d1d, -20px -20px 60px #272727;
   }
+}
 
+html {
   padding: 0;
   margin: 0;
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.5;
-  background-color: var(--surface1);
+  @include color-var(background-color, surface1);
 }
 
 body {
@@ -73,8 +93,16 @@ body {
       width: 100%;
       height: 5px;
       content: "";
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      border-radius: var(--radius);
+      background: linear-gradient(
+        to right,
+        map-get($colors, primary),
+        map-get($colors, secondary)
+      );
+      background: linear-gradient(
+        to right,
+        var(--primary, map-get($colors, primary)),
+        var(--secondary, map-get($colors, secondary))
+      );
     }
   }
 
@@ -88,7 +116,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1;
-    color: var(--element1);
+    @include color-var(color, element1);
     cursor: pointer;
     background: none;
     border: none;
@@ -100,7 +128,7 @@ body {
       height: 30px;
       margin-left: 7px;
       fill: none;
-      stroke: var(--element2);
+      @include color-var(stroke, element2);
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 1.5px;
@@ -110,7 +138,7 @@ body {
     &:focus svg,
     &:focus {
       outline: none;
-      fill: var(--tertiary);
+      @include color-var(fill, tertiary);
     }
   }
 
@@ -118,7 +146,8 @@ body {
     max-width: 640px;
     padding: 1rem 3rem;
     margin-bottom: 5rem;
-    color: var(--element1);
+    @include color-var(color, element1);
+    @include color-var(background-color, surface1);
     background: var(--surface1);
     border-radius: var(--radius);
     box-shadow: var(--box-shadow);
@@ -130,7 +159,7 @@ body {
   }
 
   h2 {
-    color: var(--element2);
+    @include color-var(color, eleemnt2);
   }
 
   &__link-container {
@@ -142,32 +171,34 @@ body {
   &__link {
     padding: 0.5rem 1rem;
     font-weight: 600;
-    color: var(--element1);
+    @include color-var(color, element1);
     text-decoration: none;
-    background-color: var(--surface1);
-    border: 2px solid var(--primary);
+    @include color-var(background-color, surface1);
+    @include color-var(border-color, primary);
+    border-style: solid;
+    border-width: 2px;
     border-radius: var(--radius);
     transition: all 0.2s ease-in;
     &:hover,
     &:focus {
-      color: var(--elementInverse);
-      background: var(--primary);
+      @include color-var(color, elementInverse);
+      @include color-var(background-color, primary);
     }
   }
 
   &__excerpt {
     padding: 1rem 2rem;
     margin: 2rem;
-    color: var(--element2);
-    background: var(--surface2);
+    @include color-var(color, element2);
+    @include color-var(background-color, surface2);
     border-radius: var(--radius);
 
     a {
-      color: var(--primary);
+      @include color-var(color, primary);
 
       &:hover,
       &:focus {
-        color: var(--secondary);
+        color: var(secondary);
       }
     }
   }
