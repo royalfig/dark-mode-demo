@@ -21,6 +21,7 @@ if (window.CSS && CSS.supports("color", "var(--primary)")) {
     btn.addEventListener("click", toggleColorMode);
   });
 } else {
+  // If the feature isn't supported, then we hide the toggle buttons
   var btnContainer = document.querySelector(".color-mode__header");
   btnContainer.style.display = "none";
 }
