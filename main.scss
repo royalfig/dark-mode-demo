@@ -12,8 +12,8 @@ $colors: (
 );
 
 @mixin color-var($property, $color) {
-  #{$property}: map-get($colors, $color);
-  #{$property}: var(--$color, map-get($colors, $color));
+  #{$property}: map-get($colors, "#{$color}");
+  #{$property}: var(--#{$color});
 }
 
 :root {
@@ -104,6 +104,7 @@ body {
         var(--secondary, map-get($colors, secondary))
       );
     }
+    border-radius: var(--radius);
   }
 
   &__btn {
@@ -148,7 +149,6 @@ body {
     margin-bottom: 5rem;
     @include color-var(color, element1);
     @include color-var(background-color, surface1);
-    background: var(--surface1);
     border-radius: var(--radius);
     box-shadow: var(--box-shadow);
     transition: all 0.2s ease-in;
@@ -159,7 +159,7 @@ body {
   }
 
   h2 {
-    @include color-var(color, eleemnt2);
+    @include color-var(color, element2);
   }
 
   &__link-container {
@@ -198,7 +198,7 @@ body {
 
       &:hover,
       &:focus {
-        color: var(secondary);
+        @include color-var(color, secondary);
       }
     }
   }
