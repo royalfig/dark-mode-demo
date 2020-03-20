@@ -80,7 +80,12 @@ body {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 4rem);
-  padding: 2rem;
+  padding: 1rem 0.5rem;
+
+  @media (min-width: 640px) {
+    padding: 2rem;
+  }
+
   margin: 0;
 
   &__header {
@@ -145,7 +150,12 @@ body {
 
   &__section {
     max-width: 640px;
-    padding: 1rem 3rem;
+    padding: 0.5rem 1rem;
+
+    @media (min-width: 640px) {
+      padding: 1rem 3rem;
+    }
+
     margin-bottom: 5rem;
     @include color-var(color, element1);
     @include color-var(background-color, surface1);
@@ -187,8 +197,14 @@ body {
   }
 
   &__excerpt {
-    padding: 1rem 2rem;
-    margin: 2rem;
+    padding: 0.5rem 1.5rem;
+    margin: 1rem;
+
+    @media (min-width: 640px) {
+      padding: 1rem 2rem;
+      margin: 2rem;
+    }
+
     @include color-var(color, element2);
     @include color-var(background-color, surface2);
     border-radius: var(--radius);
