@@ -2,6 +2,8 @@
 
 # The Complete Guide to the Dark Mode Toggle
 
+You may have noticed that Dark Mode is becoming more and more a thing. In this article, I provide a complete guide to adding Dark Mode to your website.
+
 > Best Practices to Unlock the Dark Side
 
 Recently, Chris Coyier at CSS-Tricks threw down the gauntlet for anyone who was about "to write a blog post about dark mode." He listed 10 points that would need to be covered.
@@ -12,8 +14,8 @@ Recently, Chris Coyier at CSS-Tricks threw down the gauntlet for anyone who was 
 - Show how JavaScript can know about the OS-level choice
 - Let the user have ultimate say over color preference
 - Build a theme switcher, including gotchas
-- Who else is building Dark Mode toggles?
-- Who else is writing about it?
+- See who else is building Dark Mode toggles
+- See who else is writing about it
 - Discuss what is and isn't supported
 - Make accessibility a main concern
 
