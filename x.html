@@ -1,0 +1,550 @@
+<p>
+  You may have noticed that Dark Mode is becoming more and more a thing. In this
+  article, I provide a complete guide to adding Dark Mode to your website.
+</p>
+<blockquote>Best Practices to Unlock the Dark Side</blockquote>
+<p>
+  Recently, Chris Coyier at CSS-Tricks threw down the gauntlet for anyone who
+  was about
+  <a
+    href="https://css-tricks.com/lets-say-you-were-going-to-write-a-blog-post-about-dark-mode/"
+    >"to write a blog post about dark mode."</a
+  >
+  He listed 10 points that would need to be covered:
+</p>
+<ol>
+  <li>Explain Dark Mode</li>
+  <li>
+    Provide a demo (<a href="https://royalfig.github.io/dark-mode-demo/"
+      >Jump to the demo</a
+    >)
+  </li>
+  <li>
+    Explain that Dark Mode can happen at the operating system level itself
+  </li>
+  <li>Show how JavaScript can know about the OS-level choice</li>
+  <li>Let the user have ultimate say over color preference</li>
+  <li>Build a theme switcher, including gotchas</li>
+  <li>See who else is building Dark Mode toggles</li>
+  <li>See who else is writing about it</li>
+  <li>Discuss what is and isn't supported</li>
+  <li>Make accessibility a main concern</li>
+</ol>
+<p>
+  This post aims to cover all 10 points (some better than others). I offer what
+  I've found to be the best practices for implementing a dark mode toggle, and I
+  look forward to refining these practices with suggestions, criticisms, and
+  comments from the community.
+</p>
+<h2 id="the-order-of-operations">The Order of Operations</h2>
+<ol>
+  <li><a href="#ui-ux-considerations">UI/UX Considerations</a></li>
+  <li>
+    <a href="#defining-a-dark-light-ui-with-css-custom-properties"
+      >Defining a Dark/Light UI with CSS Custom Properties</a
+    >
+  </li>
+  <li>
+    <a href="#toggling-dark-light-mode-with-js"
+      >Toggling between Dark/Light Mode with JavaScript</a
+    >
+  </li>
+  <li>
+    <a href="#respecting-user-color-scheme-preference"
+      >Respecting the OS-Level Color-Scheme Preference (and Letting the User
+      Override That Preference)</a
+    >
+  </li>
+</ol>
+<h2 id="ui-ux-considerations">UI/UX Considerations</h2>
+<h4 id="definitions">Definitions</h4>
+<!--kg-card-begin: html-->
+<dl>
+  <dt><strong>Dark Mode</strong></dt>
+  <dd>A UI that generally uses a darker color palette</dd>
+  <br />
+  <dt><strong>Light Mode</strong></dt>
+  <dd>
+    A long-standing but not immemorial default, in which a UI uses a lighter
+    color palette.
+  </dd>
+</dl>
+<!--kg-card-end: html-->
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/5593126128_41360200b7_c.jpg"
+    class="kg-image"
+    alt="Apple IIe with monochrome display with a dark background and light foreground"
+  />
+  <figcaption>
+    Dark Mode? Apple IIe and Bank Street Writer by
+    <a href="https://www.flickr.com/photos/markgregory/">Mark Mathosian</a>
+  </figcaption>
+</figure>
+<p>
+  Despite the vociferous support of some, Dark Mode is not held to be superior
+  by all. The preference for either mode is subjective. A user might even prefer
+  to use different modes at different times of day or depending on their
+  location. Perhaps you're browsing Reddit in bed beside your trying-to-sleep
+  spouse who complains about the light from your 32-inch laptop. You just switch
+  modes and, oh my Zsh, Dark Mode saves a marriage, again.
+</p>
+<h3 id="accessibility">Accessibility</h3>
+<p>
+  Switching between a dark color palette and a light one involves more than just
+  switching between darker and lighter background colors. Most importantly, you
+  need to ensure that colors on both palettes meet
+  <a href="https://contrastchecker.com/"
+    >contrast requirements for accessibility</a
+  >.
+  <strong>Many colors will not be interchangeable between modes.</strong> This
+  means that you may need different primary or brand colors for each palette.
+</p>
+<p>
+  A second consideration is visual hierarchy. Based on Chethan KVS's excellent
+  article on
+  <a
+    href="https://blog.prototypr.io/how-to-design-a-dark-theme-for-your-android-app-3daeb264637"
+    >designing a dark theme</a
+  >, which is itself based on the principles of Material Design, the gist is
+  that darker shades should be reserved for surfaces at the back of the page,
+  with lighter and lighter shades used as you approach the front. For example,
+  to indicate that a modal sits on top of the page, its background color should
+  be lighter than the background color of the section behind it.
+</p>
+<p>
+  Given these guidelines, I've found the following strategy useful for
+  constructing dark and light color palettes.
+</p>
+<h3 id="surface-colors">Surface Colors</h3>
+<p>
+  Begin with your surface colors, which might include three or more shades that
+  increase in lightness. These will be the background color of your site's body,
+  menus, footers, navigation bars, modals, etc.
+</p>
+<h3 id="element-colors">Element Colors</h3>
+<p>
+  Do the same thing with your element colors, which might include three or more
+  shades that increase in darkness. <em>Element color</em> refers to things like
+  font color, horizontal lines, borders, tables, and anything else that needs to
+  stand apart from the background. The trick here is to ensure that combinations
+  of background and text meet contrast requirements where appropriate.
+</p>
+<h3 id="signature-colors">Signature Colors</h3>
+<p>
+  Finally, choose your sets of primary, secondary, etc., colors. Again, ensure
+  that these colors maintain sufficient contrast on all background colors if
+  they're going to be used as a font color.
+</p>
+<figure class="kg-card kg-gallery-card kg-width-wide kg-card-hascaption">
+  <div class="kg-gallery-container">
+    <div class="kg-gallery-row">
+      <div class="kg-gallery-image">
+        <img
+          src="/content/images/2020/03/DARK-2.svg"
+          width="322"
+          height="378"
+        />
+      </div>
+      <div class="kg-gallery-image">
+        <img
+          src="/content/images/2020/03/LIGHT-2.svg"
+          width="322"
+          height="378"
+        />
+      </div>
+    </div>
+  </div>
+  <figcaption>Example Dark and Light Color Palettes</figcaption>
+</figure>
+<h2 id="defining-a-dark-light-ui-with-css-custom-properties">
+  Defining a Dark/Light UI with CSS Custom Properties
+</h2>
+<p>
+  Nice. You now have some beautiful dark and light color palettes. You're
+  probably thinking to yourself, "I better start preparing my acceptance speech
+  for my palette of the year award." If you're not yet at peak color palette,
+  there are tons of generators out there. Three that I'm particularly fond of
+  include
+  <a href="https://javisperez.github.io/tailwindcolorshades/#/"
+    >Tailwind's shade generator</a
+  >, the
+  <a href="https://www.materialpalette.com/"
+    >material design palette generator</a
+  >, and
+  <a href="https://mycolor.space/"
+    >ColorSpace's palette and gradient generator</a
+  >.
+</p>
+<blockquote>All dressed up and nowhere to go</blockquote>
+<p>
+  But what do you do now? How do you get your palettes to work on your website?
+</p>
+<p>
+  Enter
+  <a
+    href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties"
+    >CSS custom properties</a
+  >, which allow you to define variables in CSS. By using the
+  <em>same</em> property name for your dark and light color palettes, you and
+  your users can toggle between color modes.
+</p>
+<p>
+  Since a custom property is limited to the selector in which it's defined, best
+  practice dictates generally defining all properties under the pseudo-selector
+  <code>:root</code> so that variables are available globally. To differentiate
+  between whether the light or dark palette is active, use a color-mode custom
+  attribute selector, which we can target with JavaScript.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/custom-properties.png"
+    class="kg-image"
+    alt="Defining a dark and light color palette with CSS custom properties"
+  />
+  <figcaption>
+    Defining a dark and light color palette with CSS custom properties
+  </figcaption>
+</figure>
+<h2 id="toggling-dark-light-mode-with-js">Toggling Dark/Light Mode with JS</h2>
+<p>
+  Palettes are defined. They're in the stylesheet. But nothing's happening yet!
+</p>
+<h3 id="define-your-default">Define Your Default</h3>
+<p>
+  We need to tell our document which mode it should be in by writing a custom
+  attribute on the <code>html</code> tag. We're going to write a function that
+  allows users to toggle between dark and light mode, but you first need to
+  define a default mode for the site. Should it load in dark or light mode? This
+  choice will be up to you and maybe some user research. The markup below shows
+  us how to set a default color mode.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/html-default.png"
+    class="kg-image"
+    alt="Set your color palette default in HTML"
+  />
+  <figcaption>Set your color palette default in HTML</figcaption>
+</figure>
+<h3 id="create-a-color-mode-toggle-button">
+  Create a Color Mode Toggle Button
+</h3>
+<p>
+  For the user to toggle between modes, they'll need something to click. There
+  are several clever implementations, which include
+  <a
+    href="https://dribbble.com/shots/7635203-Light-Dark-mode-toggle-switcher?utm_source=Clipboard_Shot&amp;utm_campaign=jenkarapetyan&amp;utm_content=Light%20%2F%20Dark%20mode%20toggle%20switcher&amp;utm_medium=Social_Share"
+    >cool</a
+  >
+  <a
+    href="https://dev.to/ahmadbassamemran/awesome-animation-checkbox-css-toggle-day-night-mode-5dnm"
+    >animations</a
+  >
+  <a
+    href="https://css-tricks.com/a-dark-mode-toggle-with-react-and-themeprovider/"
+    >between states</a
+  >
+  or custom icons. For this article, I'll do something more pedestrian and
+  alternate between two icons, a sun and moon, to represent light and dark mode,
+  respectively.
+  <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use"
+    >(SVG icons are referenced here with the <code>use</code> method.)</a
+  >
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/html-buttons.png"
+    class="kg-image"
+    alt="Markup for light and dark mode buttons"
+  />
+  <figcaption>Markup for light and dark mode buttons</figcaption>
+</figure>
+<p>
+  To show and hide the buttons depending on the current site's state, we can
+  combine the element's class of "dark" or "light" with the site's current state
+  as defined by the "color-mode" HTML custom attribute.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/hide-elements.png"
+    class="kg-image"
+    alt="Rules to hide elements depending on site's current color scheme"
+  />
+  <figcaption>
+    Rules to hide elements depending on site's current color scheme
+  </figcaption>
+</figure>
+<p>
+  We are on fire 🔥. We've got our HTML and CSS in place, our default color mode
+  dispalys, so now it's time to hook up our JavaScript to make our buttons
+  interactive. There are three pieces to the code.
+</p>
+<ol>
+  <li>Define a function to toggle between dark and light modes</li>
+  <li>
+    Create an event handler that listens for clicks on our sun and moon buttons
+  </li>
+  <li>Select those buttons in the DOM</li>
+</ol>
+<p>
+  The color mode toggle code works as follows. When a user clicks the button,
+  the <code>toggleColorMode</code> function looks to see whether the button
+  contains the class "light--hidden." If it does, then it sets the document's
+  color-mode attribute to "light," thereby turning on Light Mode. If not, then
+  it turns on Dark Mode. But that's not all. The function also sets an item in
+  the user's local storage, which sets the selected mode as the user's
+  preference. You can check it out by visiting the Local Storage option in the
+  Storage or Application panel in your browser's developer tools. Since local
+  storage persists almost indefinitely, the user's preference for light or dark
+  mode remains for any return visit the user may make, even after exiting the
+  browser.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/js.png"
+    class="kg-image"
+    alt="JS for to toggle Dark or Light Mode"
+  />
+  <figcaption>JS for to toggle Dark or Light Mode</figcaption>
+</figure>
+<h2 id="respecting-user-color-scheme-preference">
+  Respecting User Color-Scheme Preference
+</h2>
+<p>
+  Look at how far we've come! We've defined a dark and light color palette that
+  users can toggle between, and our site will even remember a user's last
+  preference.
+</p>
+<p>
+  But preferences can be set at another level altogether, that is, in the
+  operating system itself. You can set your color preference in Windows, MacOS,
+  and Android, with varying levels of support. If a user has gone to the trouble
+  of changing this preference, then it would be great if we could render our
+  site according to that preference on initial load, automatically.
+</p>
+<p>
+  With the CSS media feature,
+  <code
+    ><a
+      href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme"
+      >prefers-color-scheme</a
+    ></code
+  >, accessible via JS and CSS, we can. Here's what the code should do. If the
+  user has set an OS-level preference for a color scheme and has
+  <strong>not</strong> set a preference on our site during an earlier visit,
+  then we should respect the OS-level preference and render the site accordingly
+  in light or dark mode. If a site-level preference was set, then we should
+  respect that preference, instead of the OS-level preference. To ensure that
+  this code executes before rendering the page, put it in the
+  <code>&lt;head&gt;</code> tag of your page.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/head.png"
+    class="kg-image"
+    alt="Ensure that OS-level or site color-mode preferences are respected"
+  />
+  <figcaption>
+    Ensure that OS-level or site color-mode preferences are respected
+  </figcaption>
+</figure>
+<h2 id="demo-">Demo 🎉</h2>
+<p>
+  The only thing left is to<a href="https://royalfig.github.io/dark-mode-demo/">
+    see it all in action</a
+  >. All the
+  <a href="https://github.com/royalfig/dark-mode-demo">source code</a> for the
+  demo is also available.
+</p>
+<h2 id="a-note-on-support">A Note on Support</h2>
+<h3 id="css-custom-properties">CSS Custom Properties</h3>
+<p>
+  CSS Custom Properties or Variables are
+  <a href="https://caniuse.com/#feat=css-variables"
+    >supported in 94.68% of browsers</a
+  >. Support is lacking in IE and older browsers. It's easy to supply a fallback
+  in these cases; however, users won't be able to switch between color modes in
+  an unsupported browser, which will be set to whatever you set as the default.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/fallback.png"
+    class="kg-image"
+    alt="Provide a fallback for unsupported browsers"
+  />
+  <figcaption>Provide a fallback for unsupported browsers</figcaption>
+</figure>
+<h4 id="use-a-sass-mixin-to-automate-your-fallback">
+  Use a SASS Mixin to Automate Your Fallback
+</h4>
+<p>
+  Writing the additional fallbacks is tedious. You can automate the process by
+  using a SASS mixin, which will write the fallbacks for you.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/mixin.png"
+    class="kg-image"
+    alt="SASS Mixin for Providing Fallback Support"
+  />
+  <figcaption>SASS Mixin for Providing Fallback Support</figcaption>
+</figure>
+<h3 id="prefers-color-scheme">Prefers-Color-Scheme</h3>
+<p>
+  The prefers-color-scheme media query is
+  <a href="https://caniuse.com/#feat=prefers-color-scheme"
+    >supported in 80.85% of browsers</a
+  >. Lack of support should not break anything.
+</p>
+<p>
+  One strategy we can take for those browsers that don't support this feature is
+  to hide the toggle button. To do this, we test to see whether custom
+  properties are supported. If not, we hide the toggle buttons. You can test
+  this out by opening up the demo in IE. It'll default to the light color theme
+  and hide the toggle buttons, since they wouldn't be operative. The updated
+  code is below, transpiled to be ES2015 compatible.
+</p>
+<figure class="kg-card kg-image-card kg-card-hascaption">
+  <img
+    src="/content/images/2020/03/fallback-js.png"
+    class="kg-image"
+    alt="Fallback for unsupported browsers in JS"
+  />
+  <figcaption>Fallback for Unsupported Browsers in JS</figcaption>
+</figure>
+<p>
+  That it, folks! Suggestions welcomed.
+  <a href="https://twitter.com/theroyalfig">@theroyalfig</a>
+</p>
+<h2 id="resources">Resources</h2>
+<figure class="kg-card kg-bookmark-card">
+  <a
+    class="kg-bookmark-container"
+    href="https://css-tricks.com/lets-say-you-were-going-to-write-a-blog-post-about-dark-mode/"
+    ><div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">
+        Let’s Say You Were Going to Write a Blog Post About Dark Mode |
+        CSS-Tricks
+      </div>
+      <div class="kg-bookmark-description">
+        This is not that blog post. I’m saying let’s say you were. This is not a
+        knock any other blog posts out there about Dark Mode. There are lots of
+        good
+      </div>
+      <div class="kg-bookmark-metadata">
+        <img
+          class="kg-bookmark-icon"
+          src="https://css-tricks.com/apple-touch-icon.png"
+        /><span class="kg-bookmark-author">Chris Coyier</span
+        ><span class="kg-bookmark-publisher">CSS-Tricks</span>
+      </div>
+    </div>
+    <div class="kg-bookmark-thumbnail">
+      <img
+        src="https://i0.wp.com/css-tricks.com/wp-content/uploads/2020/02/component-variations.png?ssl=1"
+      /></div
+  ></a>
+</figure>
+<figure class="kg-card kg-bookmark-card">
+  <a
+    class="kg-bookmark-container"
+    href="https://blog.prototypr.io/how-to-design-a-dark-theme-for-your-android-app-3daeb264637"
+    ><div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">
+        The Ultimate Guide on Designing a Dark Theme for your Android app.
+      </div>
+      <div class="kg-bookmark-description">
+        In this article, I’m going to explain the step by step process of
+        designing Dark Theme/Dark Mode to your app based on the Material Design
+        Guidelines by Google.
+      </div>
+      <div class="kg-bookmark-metadata">
+        <img
+          class="kg-bookmark-icon"
+          src="https://cdn-images-1.medium.com/fit/c/152/152/1*8I-HPL0bfoIzGied-dzOvA.png"
+        /><span class="kg-bookmark-author">Chethan KVS</span
+        ><span class="kg-bookmark-publisher">Prototypr</span>
+      </div>
+    </div>
+    <div class="kg-bookmark-thumbnail">
+      <img
+        src="https://miro.medium.com/max/1200/1*tUuc26kcxbjTpUUSPjXO9Q.jpeg"
+      /></div
+  ></a>
+</figure>
+<figure class="kg-card kg-bookmark-card">
+  <a class="kg-bookmark-container" href="https://web.dev/prefers-color-scheme/"
+    ><div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">
+        prefers-color-scheme: Hello darkness, my old friend
+      </div>
+      <div class="kg-bookmark-description">
+        Many devices now support an operating system wide dark mode or dark
+        theme experience. This post explains how dark mode can be supported on
+        web pages, lists best practices, and introduces a custom element named
+        dark-mode-toggle that allows web developers to offer users a way to
+        override their operati…
+      </div>
+      <div class="kg-bookmark-metadata">
+        <img
+          class="kg-bookmark-icon"
+          src="https://web.dev/images/apple-touch-icon.png"
+        /><span class="kg-bookmark-author">Thomas Steiner</span
+        ><span class="kg-bookmark-publisher">web.dev</span>
+      </div>
+    </div>
+    <div class="kg-bookmark-thumbnail">
+      <img
+        src="https://webdev.imgix.net/prefers-color-scheme/hero.jpg?auto=format&amp;fit=max&amp;w=1200"
+      /></div
+  ></a>
+</figure>
+<figure class="kg-card kg-bookmark-card">
+  <a
+    class="kg-bookmark-container"
+    href="https://material.io/design/color/dark-theme.html"
+    ><div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">Dark theme</div>
+      <div class="kg-bookmark-description">
+        Dark themes are a lower light alternative to light UIs.
+      </div>
+      <div class="kg-bookmark-metadata">
+        <img
+          class="kg-bookmark-icon"
+          src="https://material.io/favicon.ico"
+        /><span class="kg-bookmark-publisher">Material Design</span>
+      </div>
+    </div>
+    <div class="kg-bookmark-thumbnail">
+      <img
+        src="https://storage.googleapis.com/spec-host/mio-staging%2Fmio-design%2F1581631970573%2Fassets%2F1AZLafYHxljpNI8VmLY82m8SYmEAueKE7%2Fdark-mode-2x1-thumbnail.png"
+      /></div
+  ></a>
+</figure>
+<figure class="kg-card kg-bookmark-card">
+  <a
+    class="kg-bookmark-container"
+    href="https://dev.to/ananyaneogi/create-a-dark-light-mode-switch-with-css-variables-34l8"
+    ><div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">
+        Create A Dark/Light Mode Switch with CSS Variables
+      </div>
+      <div class="kg-bookmark-description">
+        Step by step guide on how to create a dark-light mode switch with CSS
+        variables in your website
+      </div>
+      <div class="kg-bookmark-metadata">
+        <img
+          class="kg-bookmark-icon"
+          src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/android-icon-192x192-0409854849dca4043b26f85039b8c3d42cbac2bd8793fec1004eb389fa153877.png"
+        /><span class="kg-bookmark-author">Ananya Neogi</span
+        ><span class="kg-bookmark-publisher">The DEV Community</span>
+      </div>
+    </div>
+    <div class="kg-bookmark-thumbnail">
+      <img
+        src="https://res.cloudinary.com/practicaldev/image/fetch/s--Ufm_5STe--/c_imagga_scale,f_auto,fl_progressive,h_500,q_auto,w_1000/https://cl.ly/b1e7ca2c7d81/download/Image%202019-04-11%20at%2010.49.31%20AM.png"
+      /></div
+  ></a>
+</figure>
