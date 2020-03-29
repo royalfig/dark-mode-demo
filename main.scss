@@ -13,7 +13,7 @@ $colors: (
 
 @mixin color-var($property, $color) {
   #{$property}: map-get($colors, "#{$color}");
-  #{$property}: var(--#{$color});
+  #{$property}: var(--#{$color}, map-get($colors, "#{$color}"));
 }
 
 :root {
