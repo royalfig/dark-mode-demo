@@ -11,7 +11,7 @@
   "author": "Ryan Feigenbaum",
   "license": "ISC",
   "devDependencies": {
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "stylelint": "^13.2.1",
     "stylelint-config-recess-order": "^2.0.4",
     "stylelint-config-recommended-scss": "^4.2.0",
